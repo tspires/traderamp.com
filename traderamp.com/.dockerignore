@@ -1,0 +1,40 @@
+# Git files
+.git
+.gitignore
+
+# Documentation
+*.md
+README*
+
+# Development files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build artifacts
+node_modules/
+dist/
+build/
+
+# AWS and deployment files
+.aws/
+terraform/
+cdk/
+*.tfvars
+*.tfstate*
+
+# Environment files
+.env
+.env.*
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+buildspec.yml

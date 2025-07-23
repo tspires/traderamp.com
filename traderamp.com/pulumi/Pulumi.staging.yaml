@@ -1,0 +1,9 @@
+config:
+  aws:region: us-east-1
+  traderamp:environment: staging
+  traderamp:domain: staging.traderamp.com
+  traderamp:container_cpu: 256
+  traderamp:container_memory: 512
+  traderamp:desired_count: 1
+  traderamp:min_capacity: 1
+  traderamp:max_capacity: 2

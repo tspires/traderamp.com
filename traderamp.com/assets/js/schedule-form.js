@@ -1,0 +1,184 @@
+/**
+ * Schedule Call Form Handler
+ * Handles form submission for scheduling sales calls
+ */
+
+(function(window, document, $) {
+    'use strict';
+
+    // Configuration
+    const CONFIG = {
+        endpoints: {
+            scheduleCall: '/api/schedule-call'
+        },
+        messages: {
+            sending: 'Sending...',
+            success: 'Thank you! We\'ll contact you within 24 hours to schedule your call.',
+            error: 'Sorry, there was an error. Please try again or call us directly.',
+            buttonText: 'Schedule Your Free 25-Minute Call'
+        },
+        selectors: {
+            form: '#schedule-call-form',
+            submitButton: 'button[type="submit"]',
+            resultContainer: '#form-result'
+        }
+    };
+
+    // Form Handler Module
+    const ScheduleFormHandler = {
+        // Cache DOM elements
+        elements: {},
+
+        init() {
+            this.cacheElements();
+            
+            if (this.elements.$form.length) {
+                this.bindEvents();
+            }
+        },
+
+        cacheElements() {
+            this.elements.$form = $(CONFIG.selectors.form);
+            this.elements.$button = this.elements.$form.find(CONFIG.selectors.submitButton);
+            this.elements.$result = $(CONFIG.selectors.resultContainer);
+        },
+
+        bindEvents() {
+            this.elements.$form.on('submit', (e) => this.handleSubmit(e));
+        },
+
+        handleSubmit(e) {
+            e.preventDefault();
+            
+            // Validate form before submission
+            if (!this.validateForm()) {
+                return;
+            }
+            
+            // Update UI for loading state
+            this.setLoadingState(true);
+            
+            // Clear previous messages
+            this.clearMessages();
+            
+            // Submit form
+            this.submitForm();
+        },
+
+        validateForm() {
+            // HTML5 validation is used, but we can add custom validation here
+            const form = this.elements.$form[0];
+            
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return false;
+            }
+            
+            return true;
+        },
+
+        setLoadingState(isLoading) {
+            const { $button } = this.elements;
+            
+            if (isLoading) {
+                $button
+                    .prop('disabled', true)
+                    .data('original-text', $button.text())
+                    .text(CONFIG.messages.sending);
+            } else {
+                $button
+                    .prop('disabled', false)
+                    .text($button.data('original-text') || CONFIG.messages.buttonText);
+            }
+        },
+
+        clearMessages() {
+            this.elements.$result.empty();
+        },
+
+        submitForm() {
+            const formData = this.getFormData();
+            
+            $.ajax({
+                url: CONFIG.endpoints.scheduleCall,
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: (response) => this.handleSuccess(response),
+                error: (xhr, status, error) => this.handleError(xhr, status, error),
+                complete: () => this.handleComplete()
+            });
+        },
+
+        getFormData() {
+            return this.elements.$form.serialize();
+        },
+
+        handleSuccess(response) {
+            // Show success message
+            this.showMessage(CONFIG.messages.success, 'success');
+            
+            // Reset form
+            this.elements.$form[0].reset();
+            
+            // Track conversion if analytics is available
+            this.trackConversion();
+        },
+
+        handleError(xhr, status, error) {
+            let errorMessage = CONFIG.messages.error;
+            
+            // Try to get error message from response
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+            }
+            
+            this.showMessage(errorMessage, 'danger');
+            
+            // Log error for debugging
+            // // console.error('Form submission error:', {
+                status: xhr.status,
+                statusText: xhr.statusText,
+                responseText: xhr.responseText,
+                error: error
+            });
+        },
+
+        handleComplete() {
+            this.setLoadingState(false);
+        },
+
+        showMessage(message, type) {
+            const alertHtml = `<div class="alert alert-${type}" role="alert">${message}</div>`;
+            
+            this.elements.$result
+                .html(alertHtml)
+                .hide()
+                .fadeIn();
+        },
+
+        trackConversion() {
+            // Google Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'conversion', {
+                    'event_category': 'Lead',
+                    'event_label': 'Schedule Call Form'
+                });
+            }
+            
+            // Facebook Pixel tracking
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead');
+            }
+        }
+    };
+
+    // Auto-initialize when DOM is ready
+    $(document).ready(() => {
+        ScheduleFormHandler.init();
+    });
+
+    // Export for testing or external use
+    window.ScheduleFormHandler = ScheduleFormHandler;
+
+})(window, document, jQuery);

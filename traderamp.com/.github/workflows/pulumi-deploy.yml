@@ -1,0 +1,129 @@
+name: Deploy with Pulumi
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      stack:
+        description: 'Pulumi stack to deploy'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+env:
+  AWS_REGION: us-east-1
+  PULUMI_STACK: ${{ github.event.inputs.stack || 'production' }}
+
+jobs:
+  deploy:
+    name: Deploy Infrastructure and Application
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Install Pulumi
+      uses: pulumi/actions@v4
+
+    - name: Install Python dependencies
+      run: |
+        cd pulumi
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Pulumi stack setup
+      run: |
+        cd pulumi
+        pulumi stack select ${{ env.PULUMI_STACK }} || pulumi stack init ${{ env.PULUMI_STACK }}
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+    - name: Pulumi preview
+      run: |
+        cd pulumi
+        source venv/bin/activate
+        pulumi preview
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+    - name: Pulumi deploy infrastructure
+      run: |
+        cd pulumi
+        source venv/bin/activate
+        pulumi up --yes
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+    - name: Get ECR repository URL
+      id: ecr
+      run: |
+        cd pulumi
+        source venv/bin/activate
+        echo "repository_url=$(pulumi stack output ecr_repository_url)" >> $GITHUB_OUTPUT
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+    - name: Login to Amazon ECR
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build and push Docker image
+      env:
+        ECR_REPOSITORY_URL: ${{ steps.ecr.outputs.repository_url }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REPOSITORY_URL:$IMAGE_TAG .
+        docker tag $ECR_REPOSITORY_URL:$IMAGE_TAG $ECR_REPOSITORY_URL:latest
+        docker push $ECR_REPOSITORY_URL:$IMAGE_TAG
+        docker push $ECR_REPOSITORY_URL:latest
+
+    - name: Update ECS service
+      run: |
+        cd pulumi
+        source venv/bin/activate
+        CLUSTER_NAME=$(pulumi stack output ecs_cluster_name)
+        SERVICE_NAME=$(pulumi stack output ecs_service_name)
+        
+        aws ecs update-service \
+          --cluster $CLUSTER_NAME \
+          --service $SERVICE_NAME \
+          --force-new-deployment \
+          --region ${{ env.AWS_REGION }}
+        
+        aws ecs wait services-stable \
+          --cluster $CLUSTER_NAME \
+          --services $SERVICE_NAME \
+          --region ${{ env.AWS_REGION }}
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+    - name: Output deployment info
+      if: always()
+      run: |
+        cd pulumi
+        source venv/bin/activate
+        echo "### Deployment Outputs" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        pulumi stack output >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
