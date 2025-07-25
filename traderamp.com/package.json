@@ -1,0 +1,55 @@
+{
+  "name": "traderamp-website",
+  "version": "1.0.0",
+  "description": "TradeRamp - IT Solutions Trusted by Leading Trade Companies",
+  "main": "index.js",
+  "scripts": {
+    "build": "make build",
+    "clean": "make clean",
+    "dev": "make dev",
+    "test": "make test",
+    "lint": "eslint assets/js/*.js --fix",
+    "lint:css": "stylelint 'assets/css/**/*.css' --fix",
+    "serve": "make serve",
+    "deploy": "make deploy",
+    "minify:css": "cleancss -o dist/assets/css/app.min.css dist/assets/css/app.css",
+    "minify:js": "terser dist/assets/js/app.js -o dist/assets/js/app.min.js --compress --mangle"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/traderamp.com.git"
+  },
+  "keywords": [
+    "traderamp",
+    "trading",
+    "IT solutions",
+    "AWS",
+    "cloud"
+  ],
+  "author": "TradeRamp",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "html-minifier-terser": "^7.2.0",
+    "http-server": "^14.1.1",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "terser": "^5.27.0"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ]
+}

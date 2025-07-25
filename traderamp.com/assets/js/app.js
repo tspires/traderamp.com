@@ -329,7 +329,10 @@
                         const message = data.Status === 400 
                             ? `Error: ${data.Message}`
                             : `Success: ${data.Message}`;
-                        alert(message);
+                        // Display message in a proper UI element instead of alert
+                        if (typeof ScheduleFormHandler !== 'undefined') {
+                            ScheduleFormHandler.showMessage(message, data.Status === 400 ? 'danger' : 'success');
+                        }
                     }
                 );
             });

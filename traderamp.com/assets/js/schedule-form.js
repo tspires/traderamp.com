@@ -1,6 +1,7 @@
 /**
- * Schedule Call Form Handler
- * Handles form submission for scheduling sales calls
+ * Schedule Call Form Handler - Clean Code Version
+ * @module ScheduleFormHandler
+ * @description Handles form submission for scheduling sales calls with proper validation and error handling
  */
 
 (function(window, document, $) {
@@ -15,58 +16,111 @@
             sending: 'Sending...',
             success: 'Thank you! We\'ll contact you within 24 hours to schedule your call.',
             error: 'Sorry, there was an error. Please try again or call us directly.',
-            buttonText: 'Schedule Your Free 25-Minute Call'
+            buttonText: 'Schedule Your Free 25-Minute Call',
+            validation: {
+                name: 'Please enter your full name',
+                email: 'Please enter a valid email address',
+                phone: 'Please enter a valid phone number',
+                company: 'Please enter your company name'
+            }
         },
         selectors: {
             form: '#schedule-call-form',
             submitButton: 'button[type="submit"]',
-            resultContainer: '#form-result'
+            resultContainer: '#form-result',
+            errorContainer: '.error-container'
+        },
+        validation: {
+            validateOnBlur: true,
+            showErrorsInline: true,
+            rules: {
+                name: 'required|minLength:2',
+                email: 'required|email',
+                phone: 'required|phone',
+                company: 'required|minLength:2'
+            }
         }
     };
 
     // Form Handler Module
     const ScheduleFormHandler = {
-        // Cache DOM elements
+        // Cache DOM elements and validator
         elements: {},
+        validator: null,
 
+        /**
+         * Initialize the form handler
+         * @public
+         */
         init() {
             this.cacheElements();
             
             if (this.elements.$form.length) {
+                this.setupValidation();
                 this.bindEvents();
             }
         },
 
+        /**
+         * Cache DOM elements
+         * @private
+         */
         cacheElements() {
             this.elements.$form = $(CONFIG.selectors.form);
             this.elements.$button = this.elements.$form.find(CONFIG.selectors.submitButton);
             this.elements.$result = $(CONFIG.selectors.resultContainer);
+            this.elements.$errorContainer = $(CONFIG.selectors.errorContainer);
         },
 
+        /**
+         * Setup form validation
+         * @private
+         */
+        setupValidation() {
+            // Check if FormValidator is available
+            if (typeof FormValidator !== 'undefined') {
+                this.validator = FormValidator.setupForm(this.elements.$form, CONFIG.validation);
+                
+                // Listen for validation events
+                this.elements.$form.on('validation:failed', (e, result) => {
+                    this.handleValidationFailed(result);
+                });
+                
+                this.elements.$form.on('validation:passed', (e, result) => {
+                    this.handleValidationPassed(result);
+                });
+            }
+        },
+
+        /**
+         * Bind form events
+         * @private
+         */
         bindEvents() {
             this.elements.$form.on('submit', (e) => this.handleSubmit(e));
         },
 
+        /**
+         * Handle form submission
+         * @param {Event} e - Submit event
+         * @private
+         */
         handleSubmit(e) {
             e.preventDefault();
             
-            // Validate form before submission
-            if (!this.validateForm()) {
+            // Custom validation will be handled by FormValidator
+            // If validator is not available, fall back to HTML5 validation
+            if (!this.validator && !this.validateFormFallback()) {
                 return;
             }
-            
-            // Update UI for loading state
-            this.setLoadingState(true);
-            
-            // Clear previous messages
-            this.clearMessages();
-            
-            // Submit form
-            this.submitForm();
         },
 
-        validateForm() {
-            // HTML5 validation is used, but we can add custom validation here
+        /**
+         * Fallback validation when FormValidator is not available
+         * @returns {boolean} Is form valid
+         * @private
+         */
+        validateFormFallback() {
             const form = this.elements.$form[0];
             
             if (!form.checkValidity()) {
@@ -75,6 +129,32 @@
             }
             
             return true;
+        },
+
+        /**
+         * Handle validation failure
+         * @param {Object} result - Validation result
+         * @private
+         */
+        handleValidationFailed(result) {
+            // Form validation failed, errors are already displayed by validator
+            // Can add additional handling here if needed
+        },
+
+        /**
+         * Handle validation success
+         * @param {Object} result - Validation result
+         * @private
+         */
+        handleValidationPassed(result) {
+            // Update UI for loading state
+            this.setLoadingState(true);
+            
+            // Clear previous messages
+            this.clearMessages();
+            
+            // Submit form
+            this.submitForm();
         },
 
         setLoadingState(isLoading) {
@@ -125,23 +205,32 @@
             this.trackConversion();
         },
 
+        /**
+         * Handle AJAX error response
+         * @param {Object} xhr - XMLHttpRequest object
+         * @param {string} status - Status text
+         * @param {Error} error - Error object
+         * @private
+         */
         handleError(xhr, status, error) {
-            let errorMessage = CONFIG.messages.error;
-            
-            // Try to get error message from response
-            if (xhr.responseJSON && xhr.responseJSON.message) {
-                errorMessage = xhr.responseJSON.message;
+            // Use ErrorHandler if available, otherwise fallback to simple handling
+            if (typeof ErrorHandler !== 'undefined') {
+                const errorResponse = ErrorHandler.handleAjaxError(xhr, status, error, {
+                    container: this.elements.$errorContainer,
+                    customMessage: CONFIG.messages.error
+                });
+                
+                this.showMessage(errorResponse.message, 'danger');
+            } else {
+                let errorMessage = CONFIG.messages.error;
+                
+                // Try to get error message from response
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                
+                this.showMessage(errorMessage, 'danger');
             }
-            
-            this.showMessage(errorMessage, 'danger');
-            
-            // Log error for debugging
-            // // console.error('Form submission error:', {
-                status: xhr.status,
-                statusText: xhr.statusText,
-                responseText: xhr.responseText,
-                error: error
-            });
         },
 
         handleComplete() {

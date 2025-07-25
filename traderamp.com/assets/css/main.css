@@ -1,0 +1,49 @@
+/**
+ * Main CSS - Import all modular stylesheets
+ * Following BEM naming convention and SMACSS architecture
+ */
+
+/* Base - CSS Variables, resets, typography */
+@import url('base.css');
+
+/* Layout - Grid system, containers, structural components */
+@import url('layout.css');
+
+/* Modules - Reusable components */
+@import url('modules/header.css');
+@import url('modules/buttons.css');
+@import url('modules/forms.css');
+
+/* Components - UI components and page-specific elements */
+@import url('components.css');
+
+/* State - Utility classes and state-specific styles */
+.is-hidden { display: none !important; }
+.is-visible { display: block !important; }
+.is-active { opacity: 1; }
+.is-inactive { opacity: 0.5; }
+.is-loading { cursor: wait; }
+.is-disabled { pointer-events: none; opacity: 0.6; }
+
+/* Print styles */
+@media print {
+    * {
+        color: #000 !important;
+        text-shadow: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+    
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+}

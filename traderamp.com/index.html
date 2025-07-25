@@ -17,10 +17,16 @@
 
 <!-- Stylesheets
 ============================================= -->
-<link href="assets/css/external.css" rel="stylesheet">
+<!-- Core frameworks first -->
+<link href="assets/css/library/bootstrap.min.css" rel="stylesheet">
+<!-- Icon fonts -->
 <link href="assets/css/cons.css" rel="stylesheet">
-<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<!-- Third-party plugins -->
+<link href="assets/css/external.css" rel="stylesheet">
+<!-- Theme styles -->
 <link href="assets/css/style.css" rel="stylesheet">
+<!-- Custom modular styles -->
+<link href="assets/css/main.css" rel="stylesheet">
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 <!--[if lt IE 9]>
@@ -80,7 +86,7 @@
 ============================================= -->
 <section id="hero" class="section hero hero-12 text-center bg-overlay bg-overlay-dark bg-parallax fullscreen">
     <div class="bg-section">
-        <img src="assets/images/hero/1.jpg" alt="Background" />
+        <img src="assets/images/hero/banner-bg.jpg" alt="Construction site background" style="filter: blur(60px); transform: scale(1.1);" />
     </div>
     <div class="pos-vertical-center">
         <div class="container">
@@ -125,9 +131,7 @@
                         <p>Get 20-50 qualified leads per month. We target homeowners ready to hire, not just browsing.</p>
                     </div>
                 </div>
-                <!-- .feature-panel end -->
             </div>
-            <!-- .col-md-4 end -->
 
             <!-- Panel #2 -->
             <div class="col-xs-12 col-sm-6 col-md-3">
@@ -140,9 +144,7 @@
                         <p>Dominate Google search results. Your business shows up first when customers need your services.</p>
                     </div>
                 </div>
-                <!-- .feature-panel end -->
             </div>
-            <!-- .col-md-4 end -->
 
             <!-- Panel #3 -->
             <div class="col-xs-12 col-sm-6 col-md-3">
@@ -155,9 +157,7 @@
                         <p>Custom strategies that work. Stop wasting money on marketing that doesn't deliver results.</p>
                     </div>
                 </div>
-                <!-- .feature-panel end -->
             </div>
-            <!-- .col-md-4 end -->
 
             <!-- Panel #4 -->
             <div class="col-xs-12 col-sm-6 col-md-3">
@@ -170,9 +170,7 @@
                         <p>Track every lead, every dollar. Know exactly what's working and scale what delivers ROI.</p>
                     </div>
                 </div>
-                <!-- .feature-panel end -->
             </div>
-            <!-- .col-md-4 end -->
         </div>
         <!-- .row end -->
     </div>
@@ -192,45 +190,43 @@
                     <p class="heading--desc">We're not just another marketing agency. We understand trade businesses because we've worked with hundreds of contractors. We know your customers, your competition, and exactly what drives growth in your industry.</p>
                 </div>
             </div>
-            <!-- .col-md-6 end -->
             <div class="col-xs-12 col-sm-6 col-md-6 col-md-offset-1">
                 <div class="row">
                     <!-- Stat #1 -->
-                    <div class="col-xs-6 col-sm-6 col-md-6 text-center" style="margin-bottom: 30px;">
-                        <div class="stat-box">
-                            <h2 style="color: #f5af00; font-size: 38px; margin-bottom: 10px;">100+</h2>
-                            <h4 style="font-size: 28px;">Businesses Served</h4>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-center statistics__container">
+                        <div class="statistics__item">
+                            <h2 class="statistics__number">100+</h2>
+                            <h4 class="statistics__label">Businesses Served</h4>
                         </div>
                     </div>
                     
                     <!-- Stat #2 -->
-                    <div class="col-xs-6 col-sm-6 col-md-6 text-center" style="margin-bottom: 30px;">
-                        <div class="stat-box">
-                            <h2 style="color: #f5af00; font-size: 38px; margin-bottom: 10px;">$5M+</h2>
-                            <h4 style="font-size: 28px;">Revenue Generated</h4>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-center statistics__container">
+                        <div class="statistics__item">
+                            <h2 class="statistics__number">$5M+</h2>
+                            <h4 class="statistics__label">Revenue Generated</h4>
                         </div>
                     </div>
                     
                     <div class="clearfix"></div>
                     
                     <!-- Stat #3 -->
-                    <div class="col-xs-6 col-sm-6 col-md-6 text-center" style="margin-bottom: 30px;">
-                        <div class="stat-box">
-                            <h2 style="color: #f5af00; font-size: 38px; margin-bottom: 10px;">5K+</h2>
-                            <h4 style="font-size: 28px;">Qualified Leads Delivered</h4>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-center statistics__container">
+                        <div class="statistics__item">
+                            <h2 class="statistics__number">5K+</h2>
+                            <h4 class="statistics__label">Qualified Leads Delivered</h4>
                         </div>
                     </div>
                     
                     <!-- Stat #4 -->
-                    <div class="col-xs-6 col-sm-6 col-md-6 text-center" style="margin-bottom: 30px;">
-                        <div class="stat-box">
-                            <h2 style="color: #f5af00; font-size: 38px; margin-bottom: 10px;">4.8★</h2>
-                            <h4 style="font-size: 28px;">Average Client Rating</h4>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-center statistics__container">
+                        <div class="statistics__item">
+                            <h2 class="statistics__number">4.8★</h2>
+                            <h4 class="statistics__label">Average Client Rating</h4>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- .col-md-6 end -->
         </div>
         <!-- .row end -->
     </div>
@@ -265,7 +261,6 @@
                     <p class="heading--desc">Don't just take our word for it. See what trade business owners are saying about the impact TradeRamp has had on their growth and profitability.</p>
                 </div>
             </div>
-            <!-- .col-md-6 end -->
         </div>
         <!-- .row end -->
         <div class="row">
@@ -285,7 +280,6 @@
                     </div>
                 </div>
             </div>
-            <!-- .col-md-6 end -->
             <!-- Testimonial #2 -->    
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="testimonial-panel">
@@ -302,7 +296,6 @@
                     </div>
                 </div>
             </div>
-            <!-- .col-md-6 end -->
          </div>
         <!-- .row end -->
     </div>
@@ -314,40 +307,34 @@
 ============================================= -->
 <section id="info-boxes" class="section info-boxes bg-gray text-center-xs">
     <div class="container">
-        <div class="row widget--boxes text-center">
+        <div class="row info-boxes text-center">
             <div class="col-xs-12 col-sm-4 col-md-4">
-                <div class="widget--info-box">
-                    <div style="color: #f5af00; font-size: 50px; line-height: 1; margin-bottom: 34px;">
+                <div class="info-box">
+                    <div class="info-box__icon">
                         <i class="flaticon-tools"></i>
                     </div>
-                    <h4>Trades Focused</h4>
-                    <p>Marketing solutions for contractors,<br>electricians, plumbers, HVAC & roofers</p>
+                    <h4 class="info-box__title">Trades Focused</h4>
+                    <p class="info-box__text">Marketing solutions for contractors,<br>electricians, plumbers, HVAC & roofers</p>
                 </div>
-                <!-- .widget-info-box end -->
             </div>
-            <!-- .col-md-4 end -->
             <div class="col-xs-12 col-sm-4 col-md-4">
-                <div class="widget--info-box">
-                    <div style="color: #f5af00; font-size: 50px; line-height: 1; margin-bottom: 34px;">
+                <div class="info-box">
+                    <div class="info-box__icon">
                         <i class="flaticon-helmet"></i>
                     </div>
-                    <h4>Get Started Today</h4>
-                    <p>Schedule Your Free Strategy Call<br>100% No-Risk Consultation</p>
+                    <h4 class="info-box__title">Get Started Today</h4>
+                    <p class="info-box__text">Schedule Your Free Strategy Call<br>100% No-Risk Consultation</p>
                 </div>
-                <!-- .widget-info-box end -->
             </div>
-            <!-- .col-md-4 end -->
             <div class="col-xs-12 col-sm-4 col-md-4">
-                <div class="widget--info-box">
-                    <div style="color: #f5af00; font-size: 50px; line-height: 1; margin-bottom: 34px;">
+                <div class="info-box">
+                    <div class="info-box__icon">
                         <i class="flaticon-contract"></i>
                     </div>
-                    <h4>Guaranteed Results</h4>
-                    <p>More qualified leads or your money back<br>Track every lead, every dollar</p>
+                    <h4 class="info-box__title">Guaranteed Results</h4>
+                    <p class="info-box__text">More qualified leads or your money back<br>Track every lead, every dollar</p>
                 </div>
-                <!-- .widget-info-box end -->
             </div>
-            <!-- .col-md-4 end -->
         </div>
         <!-- .row end -->
     </div>
@@ -400,7 +387,7 @@
                             <textarea class="form-control" name="contact-message" id="contact-message" rows="3" placeholder="Tell us about your current marketing challenges (optional)"></textarea>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mt-20 text-center">
-                            <button type="submit" class="btn btn--primary btn--rounded" style="padding: 15px 50px; display: inline-flex; align-items: center; justify-content: center; line-height: 1.2; min-width: 320px;">Schedule Your Free 25-Minute Call</button>
+                            <button type="submit" class="btn btn--primary btn--rounded btn--cta-large">Schedule Your Free 25-Minute Call</button>
                         </div>
                     </div>
                     <div class="row mt-20">
@@ -420,6 +407,8 @@
 <footer id="footer9" class="footer footer-5 footer-8 footer-9 bg-white text-center-xs pt-0 pb-0">
     <div class="footer-widget">
         <div class="container">
+        </div>
+    </div>
     <!-- .footer-widget end -->
     <div class="footer-bar">
         <div class="container">

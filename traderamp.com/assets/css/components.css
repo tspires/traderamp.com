@@ -1,0 +1,309 @@
+/**
+ * Components CSS - UI Components
+ * Following BEM naming convention
+ */
+
+/* Statistics Component */
+.statistics {
+    text-align: center;
+}
+
+.statistics__container {
+    margin-bottom: var(--spacing-lg);
+}
+
+.statistics__item {
+    padding: var(--spacing-md);
+}
+
+.statistics__number {
+    color: var(--color-primary);
+    font-size: var(--font-size-h1);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1;
+}
+
+.statistics__label {
+    font-size: var(--font-size-h3);
+    font-weight: 400;
+    color: var(--color-text);
+}
+
+/* Feature Icon Component */
+.feature {
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.feature__icon {
+    color: var(--color-primary);
+    font-size: 50px;
+    line-height: 1;
+    margin-bottom: var(--spacing-lg);
+    display: block;
+}
+
+.feature__title {
+    font-size: var(--font-size-h4);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.feature__description {
+    color: var(--color-text-light);
+    line-height: 1.6;
+}
+
+/* Info Box Component */
+.info-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.info-box {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background-color: var(--color-background);
+    border-radius: 8px;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.info-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.info-box__icon {
+    color: var(--color-primary);
+    font-size: 50px;
+    line-height: 1;
+    margin-bottom: var(--spacing-lg);
+    display: block;
+}
+
+.info-box__title {
+    font-size: var(--font-size-h4);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.info-box__text {
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    text-align: center;
+    min-height: 850px; /* Match image height */
+    overflow: hidden;
+}
+
+/* Hero Background Image Sizing */
+.hero .bg-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero .bg-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    filter: blur(60px) !important;
+    transform: scale(1.1) !important;
+    -webkit-filter: blur(60px) !important;
+    -moz-filter: blur(60px) !important;
+    -ms-filter: blur(60px) !important;
+}
+
+/* Hero Content Positioning */
+.hero .pos-vertical-center,
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Responsive Hero Heights */
+@media (max-width: 1200px) {
+    .hero {
+        min-height: 700px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 600px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        min-height: 500px;
+    }
+}
+
+.hero__title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.hero__subtitle {
+    font-size: var(--font-size-h5);
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Call to Action */
+.cta {
+    background-color: var(--color-primary);
+    color: white;
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+}
+
+.cta__title {
+    font-size: var(--font-size-h2);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: white;
+}
+
+.cta__description {
+    font-size: var(--font-size-h6);
+    margin-bottom: var(--spacing-xl);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Card Component */
+.card {
+    background-color: var(--color-background);
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card__header {
+    border-bottom: 1px solid #e1e5e9;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+}
+
+.card__title {
+    font-size: var(--font-size-h4);
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-text);
+}
+
+.card__body {
+    color: var(--color-text-light);
+    line-height: 1.6;
+}
+
+.card__footer {
+    border-top: 1px solid #e1e5e9;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+}
+
+/* Testimonial Component */
+.testimonial {
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.testimonial__quote {
+    font-size: var(--font-size-h5);
+    font-style: italic;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+.testimonial__author {
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+}
+
+.testimonial__company {
+    color: var(--color-text-light);
+    font-size: 14px;
+}
+
+/* Badge Component */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 4px;
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.badge--secondary {
+    background-color: var(--color-text-light);
+}
+
+.badge--success {
+    background-color: #27ae60;
+}
+
+.badge--warning {
+    background-color: #f39c12;
+}
+
+.badge--danger {
+    background-color: #e74c3c;
+}
+
+/* Page Sections */
+.page-section--error {
+    padding: var(--spacing-xxl) 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .hero__title {
+        font-size: 36px;
+    }
+    
+    .statistics__number {
+        font-size: 32px;
+    }
+    
+    .statistics__label {
+        font-size: 20px;
+    }
+    
+    .feature__icon {
+        font-size: 40px;
+    }
+}
