@@ -1,35 +1,40 @@
-# Use nginx alpine as base image for small size
+# Multi-stage build for TradeRamp static website
 FROM nginx:alpine
 
 # Install curl for health checks
 RUN apk add --no-cache curl
 
-# Copy custom nginx config
+# Remove default nginx config
+RUN rm -f /etc/nginx/conf.d/default.conf
+
+# Copy nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx-site.conf /etc/nginx/conf.d/default.conf
 
-# Copy website files
+# Copy static website files
 COPY index.html /usr/share/nginx/html/
+COPY robots.txt /usr/share/nginx/html/
+COPY sitemap.xml /usr/share/nginx/html/
 COPY assets/ /usr/share/nginx/html/assets/
+# Images are already in assets/images/
 
-# Create a non-root user to run nginx
-RUN adduser -D -H -u 1000 -s /bin/sh www-data
+# Copy HubSpot setup documentation (optional)
+COPY HUBSPOT-*.md /usr/share/nginx/html/docs/
+COPY README.md /usr/share/nginx/html/docs/
 
 # Set proper permissions
-RUN chown -R www-data:www-data /usr/share/nginx/html && \
-    chown -R www-data:www-data /var/cache/nginx && \
-    chown -R www-data:www-data /var/log/nginx && \
-    touch /var/run/nginx.pid && \
-    chown -R www-data:www-data /var/run/nginx.pid
+RUN chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod -R 755 /usr/share/nginx/html
+
+# Create a simple health check endpoint
+RUN echo "OK" > /usr/share/nginx/html/health
 
 # Expose port 80
 EXPOSE 80
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost/ || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost/health || exit 1
 
-# Switch to non-root user
-USER www-data
-
-# Start nginx
+# Run nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]

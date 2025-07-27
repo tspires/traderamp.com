@@ -4,10 +4,3 @@ runtime:
   options:
     virtualenv: venv
 description: TradeRamp AWS Fargate Infrastructure
-config:
-  aws:region:
-    default: us-east-1
-  traderamp:environment:
-    default: production
-  traderamp:domain:
-    default: traderamp.com

@@ -1,0 +1,197 @@
+/**
+ * HubSpot Form Styles
+ * Custom styling for HubSpot embedded forms to match TradeRamp design
+ */
+
+/* HubSpot Form Container */
+.hubspot-form-wrapper {
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* HubSpot Form Frame */
+.hs-form-frame {
+    min-height: 400px;
+    position: relative;
+}
+
+/* Loading state */
+.hs-form-frame:empty::before {
+    content: "Loading form...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+    font-size: 14px;
+}
+
+/* HubSpot Form Field Overrides */
+.hs-form-frame .hs-form-field {
+    margin-bottom: 20px;
+}
+
+.hs-form-frame .hs-form-field label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.hs-form-frame .hs-input {
+    width: 100% !important;
+    padding: 12px 24px;
+    font-size: 14px;
+    line-height: 45px;
+    height: 45px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #333333;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.hs-form-frame .hs-input:focus {
+    border-color: #f5af00;
+    outline: none;
+}
+
+.hs-form-frame textarea.hs-input {
+    min-height: 100px;
+    line-height: 24px;
+    resize: vertical;
+}
+
+.hs-form-frame select.hs-input {
+    cursor: pointer;
+}
+
+/* HubSpot Submit Button */
+.hs-form-frame .hs-submit {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.hs-form-frame .hs-button {
+    background-color: #f5af00;
+    color: #ffffff;
+    border: 2px solid #f5af00;
+    padding: 0 40px;
+    line-height: 50px;
+    height: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    min-width: 300px;
+}
+
+.hs-form-frame .hs-button:hover {
+    background-color: #333333;
+    border-color: #333333;
+    color: #ffffff;
+}
+
+/* Error Messages */
+.hs-form-frame .hs-error-msgs {
+    margin-top: 5px;
+}
+
+.hs-form-frame .hs-error-msg {
+    color: #dc3545;
+    font-size: 12px;
+    display: block;
+}
+
+/* Success Message */
+.hs-form-frame .submitted-message {
+    text-align: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.hs-form-frame .submitted-message h3 {
+    color: #28a745;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Two Column Layout for form fields */
+@media (min-width: 768px) {
+    .hs-form-frame .hs-form-field-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .hs-form-frame .hs-form-field {
+        flex: 1 1 calc(50% - 10px);
+    }
+    
+    /* Full width fields */
+    .hs-form-frame .hs-form-field:has(select),
+    .hs-form-frame .hs-form-field:has(textarea) {
+        flex: 1 1 100%;
+    }
+}
+
+/* Placeholder text color */
+.hs-form-frame .hs-input::placeholder {
+    color: #bdbdbd;
+}
+
+/* Required field asterisk */
+.hs-form-frame .hs-form-required {
+    color: #dc3545;
+}
+
+/* Legal consent checkbox */
+.hs-form-frame .hs-form-booleancheckbox label {
+    font-size: 12px;
+    font-weight: 400;
+    display: flex;
+    align-items: flex-start;
+}
+
+.hs-form-frame .hs-form-booleancheckbox input[type="checkbox"] {
+    margin-right: 8px;
+    margin-top: 4px;
+}
+
+/* Loading spinner for form submission */
+.hs-form-frame .hs-button.submitting {
+    position: relative;
+    color: transparent;
+}
+
+.hs-form-frame .hs-button.submitting::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -13,6 +13,7 @@
 @import url('modules/header.css');
 @import url('modules/buttons.css');
 @import url('modules/forms.css');
+@import url('modules/hubspot-form.css');
 
 /* Components - UI components and page-specific elements */
 @import url('components.css');
@@ -24,6 +25,74 @@
 .is-inactive { opacity: 0.5; }
 .is-loading { cursor: wait; }
 .is-disabled { pointer-events: none; opacity: 0.6; }
+
+/* Logo sizing fix */
+.navbar .logo img {
+    height: 146px;
+    width: auto;
+    max-height: 146px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Adjust logo size for smaller screens */
+@media (max-width: 768px) {
+    .navbar .logo img {
+        height: 113px;
+        max-height: 113px;
+    }
+}
+
+/* Navbar height increased by 33% (75px * 1.33 = 100px) */
+.header .navbar {
+    min-height: 100px !important;
+}
+
+/* Vertically center menu text with new navbar height */
+.navbar-nav > li > a {
+    line-height: 100px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-size: 16px !important; /* Increased from 12px by 33% */
+}
+
+/* Adjust social and contact modules to match new height */
+.social-module,
+.contact-module {
+    line-height: 100px !important;
+}
+
+/* Fix navbar header alignment */
+.navbar-header {
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+/* Navbar styling when scrolled */
+.header-fixed .navbar.affix {
+    background-color: #f5af00 !important;
+}
+
+/* Keep light logo visible when scrolled */
+.header-fixed .navbar.affix .logo-light {
+    display: inline-block !important;
+}
+
+.header-fixed .navbar.affix .logo-dark {
+    display: none !important;
+}
+
+/* White text color for menu items when scrolled */
+.header-fixed .navbar.affix .navbar-nav > li > a {
+    color: #ffffff !important;
+}
+
+.header-fixed .navbar.affix .navbar-nav > li > a:hover,
+.header-fixed .navbar.affix .navbar-nav > li.active > a {
+    color: #ffffff !important;
+    opacity: 0.8;
+}
 
 /* Print styles */
 @media print {

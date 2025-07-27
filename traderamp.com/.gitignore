@@ -64,6 +64,8 @@ coverage.xml
 
 # Pulumi
 Pulumi.*.yaml.bak
+.pulumi/
+Pulumi.*.yaml
 
 # CDK
 cdk.out/
@@ -126,3 +128,16 @@ Icon
 
 # Virtual machine crash logs
 hs_err_pid*
+
+# Test files
+test-site-health.py
+*-test.py
+*_test.py
+
+# Archived code
+archived-code/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
